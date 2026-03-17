@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.8",
+        "sentry/sentry-laravel": "^4.22",
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
