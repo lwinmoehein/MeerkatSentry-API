@@ -26,7 +26,7 @@ jobs:
             # 1. Update code
             git pull origin main
             
-            # 2. Laravel Specifics (Optimized for Production)
+            # 2. Laravel Specifics  
             composer install --no-dev --optimize-autoloader
             php artisan migrate --force
             
@@ -34,7 +34,7 @@ jobs:
             php artisan optimize:clear
             php artisan optimize
             
-            # 4. Restart the queue worker (Crucial for 2026 Laravel Apps)
+            # 4. Restart the queue worker 
             php artisan queue:restart
             
             echo "Deployment to ${{ vars.REMOTE_HOST }} successful!"
