@@ -1,0 +1,40 @@
+name: Production Deployment
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Live
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Execute SSH Commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ vars.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ${{ vars.PROJECT_PATH }}
+            
+            # 1. Update code
+            git pull origin main
+            
+            # 2. Laravel Specifics (Optimized for Production)
+            composer install --no-dev --optimize-autoloader
+            php artisan migrate --force
+            
+            # 3. Reload services
+            php artisan optimize:clear
+            php artisan optimize
+            
+            # 4. Restart the queue worker (Crucial for 2026 Laravel Apps)
+            php artisan queue:restart
+            
+            echo "Deployment to ${{ vars.REMOTE_HOST }} successful!"
