@@ -24,7 +24,7 @@ jobs:
             cd ${{ vars.PROJECT_PATH }}
             
             # 1. Update code
-            git pull origin main
+            git pull origin master
             
             # 2. Laravel Specifics  
             composer install --no-dev --optimize-autoloader
