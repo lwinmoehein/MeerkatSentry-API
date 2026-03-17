@@ -37,12 +37,20 @@ class ContentFound extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+
+
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line($this->title)
-                    ->action('Go to the web page', url($this->watchJob->url))
-                    ->line($this->watchJob->last_tag_count." tag matches were found on the web page.");
+            ->subject($this->title)
+            ->view('mails.tags.new', [
+                'title'       => $this->title,
+                'description' => $this->watchJob->last_tag_count." tag matches were found on the web page.",
+                'count'       => 1,
+                'url'         => $this->watchJob->url,
+                'appName'     => config('app.name'),
+                'iconUrl'     => asset('meerkat.png')
+            ]);
     }
 
     /**

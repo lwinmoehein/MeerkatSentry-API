@@ -46,12 +46,18 @@ class NewContentFound extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line($this->title)
-                    ->action('Go to the website', url($this->watchJob->url))
-                    ->line('May be it is a new job posted!');
+            ->subject($this->title)
+            ->view('mails.tags.new', [
+                'title'       => $this->title,
+                'description' => "May be it is a new job posted!",
+                'count'       => 1,
+                'url'         => $this->watchJob->url,
+                'appName'     => config('app.name'),
+                'iconUrl'     => asset('meerkat.png')
+            ]);
     }
 
     /**
