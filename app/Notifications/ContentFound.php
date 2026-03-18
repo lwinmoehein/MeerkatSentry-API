@@ -15,7 +15,7 @@ class ContentFound extends Notification
      * Create a new notification instance.
      */
 
-    protected $title = "Tag matches were found on the web page you are watching.";
+    protected $title = "🔭 Tag matches were found on the web page you are watching.";
 
     protected $watchJob;
     public function __construct(WatchJob $watchJob)
@@ -46,7 +46,7 @@ class ContentFound extends Notification
             ->view('mails.tags.new', [
                 'title'       => $this->title,
                 'description' => $this->watchJob->last_tag_count." tag matches were found on the web page.",
-                'count'       => 1,
+                'count'       => $this->watchJob->last_tag_count,
                 'url'         => $this->watchJob->url,
                 'appName'     => config('app.name'),
                 'iconUrl'     => asset('meerkat.png')

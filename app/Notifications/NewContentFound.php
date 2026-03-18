@@ -21,7 +21,7 @@ class NewContentFound extends Notification
 
     use Queueable;
 
-    protected $title = "Changes found on the web page you are watching.";
+    protected $title = "🔭 Changes found on the web page you are watching.";
 
     /**
      * Create a new notification instance.
@@ -53,7 +53,7 @@ class NewContentFound extends Notification
             ->view('mails.tags.new', [
                 'title'       => $this->title,
                 'description' => "May be it is a new job posted!",
-                'count'       => 1,
+                'count'       => $this->watchJob->last_tag_count    ,
                 'url'         => $this->watchJob->url,
                 'appName'     => config('app.name'),
                 'iconUrl'     => asset('meerkat.png')
